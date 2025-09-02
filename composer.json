@@ -1,0 +1,61 @@
+{
+    "name": "chrisvasey/sage-storybook",
+    "description": "Storybook integration for Sage WordPress themes using Blade components",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Chris Vasey",
+            "email": "chrisvasey@gmail.com"
+        }
+    ],
+    "keywords": [
+        "wordpress",
+        "sage",
+        "storybook",
+        "blade",
+        "components",
+        "documentation"
+    ],
+    "homepage": "https://github.com/chrisvasey/sage-storybook",
+    "support": {
+        "issues": "https://github.com/chrisvasey/sage-storybook/issues",
+        "docs": "https://github.com/chrisvasey/sage-storybook#readme"
+    },
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^10.0|^11.0",
+        "illuminate/view": "^10.0|^11.0",
+        "illuminate/http": "^10.0|^11.0",
+        "illuminate/console": "^10.0|^11.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "orchestra/testbench": "^8.0|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ChrisVasey\\SageStorybookBlade\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ChrisVasey\\SageStorybookBlade\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ChrisVasey\\SageStorybookBlade\\StorybookServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "name": "@chrisvasey/sage-storybook",
+    "version": "1.0.0",
+    "description": "Storybook integration for Sage WordPress themes using Blade components",
+    "main": "resources/js/blade-loader.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/chrisvasey/sage-storybook.git"
+    },
+    "keywords": [
+        "storybook",
+        "blade",
+        "sage",
+        "wordpress",
+        "components"
+    ],
+    "author": "Chris Vasey",
+    "license": "MIT",
+    "files": [
+        "resources/",
+        "README.md"
+    ]
+}
