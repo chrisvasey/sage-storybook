@@ -110,7 +110,7 @@ class StorybookServiceProvider extends ServiceProvider
 
         // Check environment restrictions
         $allowedEnvironments = config('storybook.allowed_environments', ['local', 'development']);
-        
+
         if (! empty($allowedEnvironments) && ! app()->environment($allowedEnvironments)) {
             return false;
         }

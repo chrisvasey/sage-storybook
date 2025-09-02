@@ -89,7 +89,7 @@ class StorybookController
     private function getCorsHeaders(): array
     {
         $allowedOrigins = config('storybook.cors.allowed_origins', ['*']);
-        
+
         return [
             'Access-Control-Allow-Origin' => implode(', ', $allowedOrigins),
             'Access-Control-Allow-Methods' => 'GET, POST, OPTIONS',

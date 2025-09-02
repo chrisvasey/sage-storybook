@@ -1,11 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
-use Orchestra\Testbench\Foundation\Bootstrap\LoadEnvironmentVariables;
-
-// Load environment variables
-(new LoadEnvironmentVariables())->bootstrap();
+require_once __DIR__.'/../vendor/autoload.php';
 
 // Set testing environment variables
 $_ENV['APP_ENV'] = 'testing';

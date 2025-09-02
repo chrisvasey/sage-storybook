@@ -23,7 +23,7 @@ class StorybookServiceProviderTest extends PackageTestCase
     public function it_registers_console_commands()
     {
         $commands = $this->app->make('Illuminate\Contracts\Console\Kernel')->all();
-        
+
         $this->assertArrayHasKey('storybook:install', $commands);
         $this->assertInstanceOf(StorybookInstallCommand::class, $commands['storybook:install']);
     }
@@ -65,7 +65,7 @@ class StorybookServiceProviderTest extends PackageTestCase
         // Create new app instance with disabled storybook
         $app = $this->createApplication();
         $app['config']->set('storybook.enabled', false);
-        
+
         // This is tricky to test in Laravel's testing environment
         // as routes are typically registered during boot
         $this->assertTrue(true); // Placeholder - would need integration test
@@ -97,7 +97,7 @@ class StorybookServiceProviderTest extends PackageTestCase
     public function it_has_correct_publishable_assets()
     {
         $provider = $this->app->getProvider('ChrisVasey\SageStorybookBlade\StorybookServiceProvider');
-        
+
         // Test that provider is registered
         $this->assertNotNull($provider);
     }

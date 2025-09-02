@@ -53,7 +53,7 @@ class StorybookIntegrationTest extends PackageTestCase
         $metadataResponse->assertStatus(200)
             ->assertJson([
                 'component' => 'components.card',
-                'exists' => true
+                'exists' => true,
             ]);
 
         $metadata = $metadataResponse->json();
@@ -62,16 +62,16 @@ class StorybookIntegrationTest extends PackageTestCase
         $this->assertContains('variant', $metadata['variables']);
 
         // 3. Test component rendering with various scenarios
-        
+
         // Basic render
         $basicRender = $this->postJson('/storybook/render/components.card', [
             'args' => [
                 'title' => 'Test Card',
-                'description' => 'This is a test card'
+                'description' => 'This is a test card',
             ],
             'context' => [
-                'theme' => 'light'
-            ]
+                'theme' => 'light',
+            ],
         ]);
 
         $basicRender->assertStatus(200);
@@ -89,11 +89,11 @@ class StorybookIntegrationTest extends PackageTestCase
                 'variant' => 'featured',
                 'image' => 'https://example.com/image.jpg',
                 'class' => 'custom-class',
-                'slot' => '<button>Action Button</button>'
+                'slot' => '<button>Action Button</button>',
             ],
             'context' => [
-                'theme' => 'dark'
-            ]
+                'theme' => 'dark',
+            ],
         ]);
 
         $advancedRender->assertStatus(200);
@@ -108,11 +108,11 @@ class StorybookIntegrationTest extends PackageTestCase
 
         // 4. Test CORS headers are present
         $basicRender->assertHeader('Access-Control-Allow-Origin');
-        
+
         // 5. Test error handling
         $errorRender = $this->postJson('/storybook/render/components.nonexistent', [
             'args' => [],
-            'context' => []
+            'context' => [],
         ]);
 
         $errorRender->assertStatus(200); // Still 200, but with error content
@@ -144,7 +144,9 @@ class StorybookIntegrationTest extends PackageTestCase
 
         // Test that blocks are listed
         $response = $this->getJson('/storybook/components');
+        $response->assertStatus(200);
         $components = $response->json('components');
+        $this->assertIsArray($components);
         $this->assertContains('blocks.hero', $components);
 
         // Test block rendering
@@ -153,9 +155,9 @@ class StorybookIntegrationTest extends PackageTestCase
                 'title' => 'Welcome to Our Site',
                 'subtitle' => 'Amazing things await',
                 'background_image' => 'https://example.com/hero.jpg',
-                'text_colour' => '#ffffff'
+                'text_colour' => '#ffffff',
             ],
-            'context' => []
+            'context' => [],
         ]);
 
         $render->assertStatus(200);
@@ -188,10 +190,10 @@ class StorybookIntegrationTest extends PackageTestCase
                 'items' => [
                     ['text' => 'Home', 'url' => '/'],
                     ['text' => 'About', 'url' => '/about'],
-                    ['text' => 'Contact', 'url' => '/contact']
-                ]
+                    ['text' => 'Contact', 'url' => '/contact'],
+                ],
             ],
-            'context' => []
+            'context' => [],
         ]);
 
         $render->assertStatus(200);

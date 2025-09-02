@@ -79,7 +79,7 @@ class StorybookService
 
         foreach ($viewPaths as $viewPath) {
             $allowedPrefixes = config('storybook.allowed_prefixes', ['components', 'blocks', 'partials']);
-            
+
             foreach ($allowedPrefixes as $prefix) {
                 $componentPath = $viewPath.'/'.$prefix;
                 if (is_dir($componentPath)) {

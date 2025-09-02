@@ -24,7 +24,7 @@ class StorybookInstallCommand extends Command
         $this->publishFiles();
 
         // Update package.json
-        if (!$this->option('skip-npm')) {
+        if (! $this->option('skip-npm')) {
             $this->updatePackageJson();
         }
 
@@ -45,8 +45,8 @@ class StorybookInstallCommand extends Command
 
         foreach ($directories as $dir) {
             $path = base_path($dir);
-            
-            if (!File::exists($path)) {
+
+            if (! File::exists($path)) {
                 File::makeDirectory($path, 0755, true);
                 $this->info("✓ Created directory: {$dir}");
             }
@@ -55,8 +55,8 @@ class StorybookInstallCommand extends Command
 
     protected function publishFiles()
     {
-        $stubsPath = __DIR__ . '/../../../resources/stubs';
-        
+        $stubsPath = __DIR__.'/../../../resources/stubs';
+
         $files = [
             'storybook-main.js' => '.storybook/main.js',
             'storybook-preview.js' => '.storybook/preview.js',
@@ -65,13 +65,13 @@ class StorybookInstallCommand extends Command
         foreach ($files as $stub => $destination) {
             $stubPath = "{$stubsPath}/{$stub}";
             $destinationPath = base_path($destination);
-            
-            if (File::exists($destinationPath) && !$this->option('force')) {
-                if (!$this->confirm("File {$destination} already exists. Overwrite?")) {
+
+            if (File::exists($destinationPath) && ! $this->option('force')) {
+                if (! $this->confirm("File {$destination} already exists. Overwrite?")) {
                     continue;
                 }
             }
-            
+
             File::copy($stubPath, $destinationPath);
             $this->info("✓ Published: {$destination}");
         }
@@ -86,14 +86,15 @@ class StorybookInstallCommand extends Command
     protected function updatePackageJson()
     {
         $packageJsonPath = base_path('package.json');
-        
-        if (!File::exists($packageJsonPath)) {
+
+        if (! File::exists($packageJsonPath)) {
             $this->warn('package.json not found. You\'ll need to manually add Storybook dependencies.');
+
             return;
         }
 
         $packageJson = json_decode(File::get($packageJsonPath), true);
-        $updatesPath = __DIR__ . '/../../../resources/stubs/package-json-updates.json';
+        $updatesPath = __DIR__.'/../../../resources/stubs/package-json-updates.json';
         $updates = json_decode(File::get($updatesPath), true);
 
         // Merge dev dependencies
@@ -114,9 +115,9 @@ class StorybookInstallCommand extends Command
         if ($this->confirm('Install npm dependencies now?')) {
             $this->info('Installing npm dependencies...');
             $this->line(''); // Empty line for better output formatting
-            
+
             exec('npm install', $output, $exitCode);
-            
+
             if ($exitCode === 0) {
                 $this->info('✓ npm dependencies installed successfully');
             } else {
@@ -128,18 +129,18 @@ class StorybookInstallCommand extends Command
     protected function generateInitialStory()
     {
         $storyPath = base_path('resources/stories/components/Button.stories.js');
-        
-        if (File::exists($storyPath) && !$this->option('force')) {
+
+        if (File::exists($storyPath) && ! $this->option('force')) {
             return;
         }
 
-        $stubPath = __DIR__ . '/../../../resources/stubs/example-story.js';
+        $stubPath = __DIR__.'/../../../resources/stubs/example-story.js';
         $content = File::get($stubPath);
-        
+
         // Customize the content based on the current site configuration
         $siteUrl = config('app.url', 'https://your-site.test');
         $content = str_replace('https://your-site.test', $siteUrl, $content);
-        
+
         File::put($storyPath, $content);
         $this->info('✓ Created example story: resources/stories/components/Button.stories.js');
     }

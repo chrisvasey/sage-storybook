@@ -4,7 +4,6 @@ namespace ChrisVasey\SageStorybookBlade\Tests\Unit\Services;
 
 use ChrisVasey\SageStorybookBlade\Services\StorybookService;
 use ChrisVasey\SageStorybookBlade\Tests\TestCase\PackageTestCase;
-use Illuminate\Support\Facades\View;
 
 class StorybookServiceTest extends PackageTestCase
 {
@@ -28,7 +27,7 @@ class StorybookServiceTest extends PackageTestCase
 
         $result = $this->service->renderComponent('components.test-button', [
             'variant' => 'secondary',
-            'text' => 'Click me'
+            'text' => 'Click me',
         ]);
 
         $this->assertStringContainsString('btn-secondary', $result);
@@ -68,7 +67,7 @@ class StorybookServiceTest extends PackageTestCase
 
         $result = $this->service->renderComponent('components.context-test', [], [
             'theme' => 'dark',
-            'viewport' => 'mobile'
+            'viewport' => 'mobile',
         ]);
 
         $this->assertStringContainsString('theme-dark', $result);
@@ -80,7 +79,7 @@ class StorybookServiceTest extends PackageTestCase
     {
         // Test non-existent component
         $result = $this->service->renderComponent('components.non-existent', []);
-        
+
         $this->assertStringContainsString('storybook-error', $result);
         $this->assertStringContainsString('View Error', $result);
         $this->assertStringContainsString('components.non-existent', $result);
@@ -144,7 +143,7 @@ class StorybookServiceTest extends PackageTestCase
         ');
 
         $result = $this->service->renderComponent('components.forms.input', [
-            'type' => 'email'
+            'type' => 'email',
         ]);
 
         $this->assertStringContainsString('type="email"', $result);
@@ -157,7 +156,7 @@ class StorybookServiceTest extends PackageTestCase
         $this->createTestView('components.wrapper-test', '<span>Content</span>');
 
         $result = $this->service->renderComponent('components.wrapper-test', [], [
-            'theme' => 'custom-theme'
+            'theme' => 'custom-theme',
         ]);
 
         $this->assertStringContainsString('<div class="storybook-component"', $result);
