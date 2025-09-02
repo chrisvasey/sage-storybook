@@ -1,5 +1,10 @@
 # Sage Storybook
 
+[![Tests](https://github.com/chrisvasey/sage-storybook/workflows/Tests/badge.svg)](https://github.com/chrisvasey/sage-storybook/actions)
+[![Latest Stable Version](https://poser.pugx.org/chrisvasey/sage-storybook/v/stable)](https://packagist.org/packages/chrisvasey/sage-storybook)
+[![Total Downloads](https://poser.pugx.org/chrisvasey/sage-storybook/downloads)](https://packagist.org/packages/chrisvasey/sage-storybook)
+[![License](https://poser.pugx.org/chrisvasey/sage-storybook/license)](https://packagist.org/packages/chrisvasey/sage-storybook)
+
 A modern Storybook integration for [Roots Sage](https://roots.io/sage/) WordPress themes that allows you to develop, test, and document your Blade components in isolation.
 
 ## Features
@@ -385,17 +390,53 @@ If you encounter CORS issues:
 
 ### Running Tests
 
+The package comes with a comprehensive test suite covering unit tests, feature tests, and integration tests:
+
 ```bash
+# Run all tests
 composer test
+
+# Run tests with coverage report
+composer test-coverage
+
+# Run specific test suites
+vendor/bin/phpunit --testsuite=Unit
+vendor/bin/phpunit --testsuite=Feature
+
+# Check code style
+composer lint
+
+# Fix code style
+composer format
 ```
+
+#### Test Coverage
+
+The test suite includes:
+
+- **Unit Tests**: Core service logic, component rendering, metadata extraction
+- **Feature Tests**: HTTP endpoints, CORS headers, error handling  
+- **Integration Tests**: Complete workflows with realistic components
+- **Console Tests**: Installation command, file publishing, configuration
+
+#### Running Tests Locally
+
+1. Clone the repository
+2. Install dependencies: `composer install`
+3. Run tests: `composer test`
 
 ### Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+3. Write tests for your changes
+4. Ensure all tests pass: `composer test`
+5. Check code style: `composer lint`
+6. Commit your changes (`git commit -m 'Add some amazing feature'`)
+7. Push to the branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
+
+All contributions must include tests and pass the existing test suite.
 
 ## Security
 
