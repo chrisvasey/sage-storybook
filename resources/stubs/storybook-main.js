@@ -19,11 +19,46 @@ const config = {
     disableTelemetry: true,
   },
   viteFinal: async (config) => {
-    // Ensure we can resolve our blade loader
+    const { default: tailwindcss } = await import('@tailwindcss/vite');
+    const fs = await import('fs');
+    const path = await import('path');
+    
+    // Add Tailwind CSS plugin
+    config.plugins = config.plugins || [];
+    config.plugins.push(tailwindcss());
+    
+    // Find the blade loader file dynamically
+    function findBladeLoader(startPath) {
+      const vendorPaths = [
+        'vendor/chrisvasey/sage-storybook/resources/js/blade-loader.js',
+        '../vendor/chrisvasey/sage-storybook/resources/js/blade-loader.js',
+        '../../vendor/chrisvasey/sage-storybook/resources/js/blade-loader.js',
+        '../../../vendor/chrisvasey/sage-storybook/resources/js/blade-loader.js',
+        '../../../../vendor/chrisvasey/sage-storybook/resources/js/blade-loader.js',
+        '../../../../../vendor/chrisvasey/sage-storybook/resources/js/blade-loader.js'
+      ];
+      
+      for (const vendorPath of vendorPaths) {
+        const fullPath = path.resolve(startPath, vendorPath);
+        if (fs.existsSync(fullPath)) {
+          return fullPath;
+        }
+      }
+      
+      // Default fallback
+      return path.resolve(startPath, '../../../../../vendor/chrisvasey/sage-storybook/resources/js/blade-loader.js');
+    }
+    
+    const bladeLoaderPath = findBladeLoader(path.dirname(new URL(import.meta.url).pathname));
+    
     config.resolve = config.resolve || {};
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@storybook/blade-loader': new URL('../node_modules/@roots/sage-storybook-blade/resources/js/blade-loader.js', import.meta.url).pathname,
+      '@storybook/blade-loader': bladeLoaderPath,
+      '@styles': new URL('../resources/css', import.meta.url).pathname,
+      '@scripts': new URL('../resources/js', import.meta.url).pathname,
+      '@fonts': new URL('../resources/fonts', import.meta.url).pathname,
+      '@images': new URL('../resources/images', import.meta.url).pathname,
     };
     return config;
   },

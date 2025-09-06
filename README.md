@@ -65,6 +65,11 @@ This will:
 Edit `.storybook/preview.js` and update the configuration:
 
 ```javascript
+import { configure } from '@storybook/blade-loader';
+// Import the theme CSS directly via Vite
+import '../resources/css/app.css';
+
+// Configure blade loader for your site
 configure({
   apiBaseUrl: 'https://your-site.test', // Your local development URL
 });
@@ -230,7 +235,6 @@ return [
     // Frontend configuration  
     'frontend' => [
         'api_base_url' => env('STORYBOOK_API_BASE_URL', env('WP_HOME')),
-        'assets_url' => env('STORYBOOK_ASSETS_URL'),
     ],
 ];
 ```
@@ -283,25 +287,14 @@ Configure the Blade loader:
 
 ```javascript
 import { configure } from '@storybook/blade-loader';
+// Import the theme CSS directly via Vite
+import '../resources/css/app.css';
 
 configure({
   apiBaseUrl: 'https://your-site.test',
-  assetsUrl: 'https://your-site.test/build/assets/app.css',
 });
 ```
 
-### `withSageAssets` decorator
-
-Automatically loads your theme's CSS:
-
-```javascript
-import { withSageAssets } from '@storybook/blade-loader';
-
-export default {
-  decorators: [withSageAssets],
-  // ... rest of story config
-};
-```
 
 ### `clearBladeCache()`
 
@@ -383,8 +376,9 @@ If you encounter CORS issues:
 ### Styles Not Loading
 
 1. **Build theme assets**: `npm run build`
-2. **Check asset URL** in `.storybook/preview.js` 
-3. **Verify CSS path** exists and is accessible
+2. **Check CSS import** in `.storybook/preview.js` (`import '../resources/css/app.css'`)
+3. **Verify Tailwind plugin** is configured in `.storybook/main.js`
+4. **Verify CSS path** exists and is accessible
 
 ## Development
 

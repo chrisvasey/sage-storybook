@@ -1,9 +1,10 @@
-import { configure, withSageAssets } from '@storybook/blade-loader';
+import { configure } from '@storybook/blade-loader';
+// Import the theme CSS directly via Vite
+import '../resources/css/app.css';
 
-// Configure the Blade loader with your site's settings
+// Configure blade loader for your site
 configure({
   apiBaseUrl: 'https://your-site.test', // Change this to your local development URL
-  assetsUrl: 'https://your-site.test/app/themes/sage/public/build/assets/app.css', // Optional: direct path to CSS
 });
 
 /** @type { import('@storybook/html-vite').Preview } */
@@ -68,7 +69,6 @@ const preview = {
       },
     },
   },
-  decorators: [withSageAssets],
 };
 
 export default preview;

@@ -5,9 +5,38 @@
  * and injects the rendered HTML into the Storybook canvas.
  */
 
+/**
+ * Attempt to auto-detect the WordPress site URL from environment
+ */
+function detectApiBaseUrl() {
+    // Check for common environment variables
+    if (typeof window !== 'undefined') {
+        // Browser environment - try to detect from current URL or common patterns
+        const hostname = window.location.hostname;
+        
+        // Common local development patterns
+        if (hostname.includes('localhost')) {
+            return 'http://localhost';
+        }
+        
+        // .test domains (Laravel Valet)
+        if (hostname.includes('.test')) {
+            return `https://${hostname}`;
+        }
+        
+        // .local domains
+        if (hostname.includes('.local')) {
+            return `http://${hostname}`;
+        }
+    }
+    
+    // Fallback to localhost
+    return 'http://localhost';
+}
+
 // Base configuration - will be overridden by user config
 let STORYBOOK_CONFIG = {
-    apiBaseUrl: 'http://localhost',
+    apiBaseUrl: detectApiBaseUrl(),
     assetsUrl: null,
 };
 
@@ -131,7 +160,7 @@ export function renderBlade(args, context) {
             `;
         });
 
-    return container.outerHTML;
+    return container;
 }
 
 /**
